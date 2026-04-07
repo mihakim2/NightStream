@@ -55,8 +55,8 @@ export default function Player() {
       if (!video) return;
       switch (e.key) {
         case ' ': e.preventDefault(); video.paused ? video.play() : video.pause(); break;
-        case 'ArrowLeft': skip(-10); break;
-        case 'ArrowRight': skip(10); break;
+        case 'ArrowLeft': skip(-30); break;
+        case 'ArrowRight': skip(30); break;
         case 'ArrowUp': e.preventDefault(); video.volume = Math.min(1, video.volume + 0.1); setVolume(video.volume); break;
         case 'ArrowDown': e.preventDefault(); video.volume = Math.max(0, video.volume - 0.1); setVolume(video.volume); break;
         case 'f': document.fullscreenElement ? document.exitFullscreen() : video.requestFullscreen?.(); break;
@@ -130,6 +130,47 @@ export default function Player() {
     }
   };
 
+  // Double-tap left/right side of video to skip, single tap to play/pause
+  const tapTimerRef = useRef(null);
+  const tapCountRef = useRef(0);
+  const [skipIndicator, setSkipIndicator] = useState(null); // 'left' | 'right' | null
+
+  const handleVideoClick = useCallback((e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const zone = x < rect.width * 0.3 ? 'left' : x > rect.width * 0.7 ? 'right' : 'center';
+
+    tapCountRef.current++;
+
+    if (tapCountRef.current === 1) {
+      tapTimerRef.current = setTimeout(() => {
+        if (tapCountRef.current === 1) {
+          // Single tap — play/pause
+          const video = videoRef.current;
+          video?.paused ? video.play() : video.pause();
+        }
+        tapCountRef.current = 0;
+      }, 250);
+    } else if (tapCountRef.current === 2) {
+      clearTimeout(tapTimerRef.current);
+      tapCountRef.current = 0;
+      // Double tap — skip based on side
+      if (zone === 'left') {
+        skip(-30);
+        setSkipIndicator('left');
+        setTimeout(() => setSkipIndicator(null), 600);
+      } else if (zone === 'right') {
+        skip(30);
+        setSkipIndicator('right');
+        setTimeout(() => setSkipIndicator(null), 600);
+      } else {
+        // Double tap center — fullscreen toggle
+        const video = videoRef.current;
+        document.fullscreenElement ? document.exitFullscreen() : video?.requestFullscreen?.();
+      }
+    }
+  }, [skip]);
+
   if (!isOpen) return null;
 
   return (
@@ -142,8 +183,22 @@ export default function Player() {
         onLoadedMetadata={handleTimeUpdate}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        onClick={() => { const video = videoRef.current; video?.paused ? video.play() : video.pause(); }}
+        onClick={handleVideoClick}
       />
+
+      {/* Skip indicators */}
+      {skipIndicator === 'left' && (
+        <div className={`${styles.skipIndicator} ${styles.skipLeft}`}>
+          <span className={styles.skipIcon}>⟲</span>
+          <span className={styles.skipText}>30s</span>
+        </div>
+      )}
+      {skipIndicator === 'right' && (
+        <div className={`${styles.skipIndicator} ${styles.skipRight}`}>
+          <span className={styles.skipIcon}>⟳</span>
+          <span className={styles.skipText}>30s</span>
+        </div>
+      )}
 
       <div className={`${styles.controls} ${showControls ? styles.visible : ''}`}>
         <div className={styles.topBar}>
@@ -159,27 +214,18 @@ export default function Player() {
           )}
 
           <div className={styles.controlsRow}>
-            {/* Skip back 10s */}
-            <button className={styles.controlBtn} onClick={() => skip(-10)} title="Back 10s">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12.5 8L8 12l4.5 4" />
-                <path d="M3 12a9 9 0 1 0 9-9" />
-                <text x="12" y="13.5" fontSize="7" fill="currentColor" stroke="none" textAnchor="middle" fontWeight="bold">10</text>
-              </svg>
+            <button className={styles.skipBtn} onClick={() => skip(-30)} title="Back 30s">
+              <span className={styles.skipBtnIcon}>↺</span>
+              <span className={styles.skipBtnLabel}>30</span>
             </button>
 
-            {/* Play/Pause */}
             <button className={`${styles.controlBtn} ${styles.playPauseBtn}`} onClick={() => { const video = videoRef.current; video?.paused ? video.play() : video.pause(); }}>
               {isPlaying ? '⏸' : '▶'}
             </button>
 
-            {/* Skip forward 10s */}
-            <button className={styles.controlBtn} onClick={() => skip(10)} title="Forward 10s">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M11.5 8L16 12l-4.5 4" />
-                <path d="M21 12a9 9 0 1 0-9-9" />
-                <text x="12" y="13.5" fontSize="7" fill="currentColor" stroke="none" textAnchor="middle" fontWeight="bold">10</text>
-              </svg>
+            <button className={styles.skipBtn} onClick={() => skip(30)} title="Forward 30s">
+              <span className={styles.skipBtnIcon}>↻</span>
+              <span className={styles.skipBtnLabel}>30</span>
             </button>
 
             <span className={styles.time}>

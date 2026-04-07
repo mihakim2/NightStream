@@ -15,8 +15,16 @@
 .controlsRow { display: flex; align-items: center; gap: 12px; }
 .controlBtn { font-size: 18px; padding: 6px; opacity: 0.9; transition: opacity var(--transition-fast), transform var(--transition-fast); display: flex; align-items: center; justify-content: center; }
 .controlBtn:hover { opacity: 1; transform: scale(1.1); }
-.controlBtn svg { display: block; }
 .playPauseBtn { font-size: 24px; padding: 6px 10px; }
+.skipBtn { display: flex; align-items: center; gap: 2px; padding: 4px 8px; opacity: 0.85; transition: opacity var(--transition-fast), transform var(--transition-fast); border-radius: 6px; }
+.skipBtn:hover { opacity: 1; transform: scale(1.08); background: rgba(255, 255, 255, 0.08); }
+.skipBtnIcon { font-size: 20px; line-height: 1; }
+.skipBtnLabel { font-size: 12px; font-weight: 700; }
+.skipIndicator { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 20px 32px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); border-radius: 50%; animation: fadeInScale 200ms ease; pointer-events: none; }
+.skipLeft { left: 15%; }
+.skipRight { right: 15%; }
+.skipIcon { font-size: 36px; }
+.skipText { font-size: 14px; font-weight: 700; }
 .time { font-size: 13px; color: rgba(255, 255, 255, 0.7); font-variant-numeric: tabular-nums; }
 .spacer { flex: 1; }
 .volumeControl { display: flex; align-items: center; gap: 6px; }
