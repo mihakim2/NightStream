@@ -4,6 +4,7 @@ import Layout from './components/Layout/Layout.jsx';
 import Player from './components/Player/Player.jsx';
 import PinModal from './components/PinModal/PinModal.jsx';
 import Setup from './pages/Setup.jsx';
+import Home from './pages/Home.jsx';
 import LiveTV from './pages/LiveTV.jsx';
 import Movies from './pages/Movies.jsx';
 import SeriesPage from './pages/Series.jsx';
@@ -69,6 +70,7 @@ export default function App() {
               hasPlaylist ? (
                 <Layout>
                   <Routes>
+                    <Route path="/home" element={<Home />} />
                     <Route path="/live" element={<LiveTV />} />
                     <Route path="/movies" element={<Movies />} />
                     <Route path="/series" element={<SeriesPage />} />
@@ -77,7 +79,7 @@ export default function App() {
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/settings" element={<Settings />} />
-                    <Route path="*" element={<Navigate to="/live" replace />} />
+                    <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </Layout>
               ) : (

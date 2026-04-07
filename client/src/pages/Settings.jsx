@@ -164,7 +164,7 @@ export default function Settings() {
 
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>About</h3>
-        <p className={styles.about}>Astra v1.0.0 — A locally-run browser-based IPTV player.</p>
+        <p className={styles.about}>NightStream v1.0.0 — A locally-run browser-based IPTV player.</p>
       </section>
     </div>
   );
