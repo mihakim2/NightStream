@@ -66,10 +66,12 @@ export default function Player() {
 
   const handleSeek = (e) => {
     const video = videoRef.current;
-    if (!video || !duration) return;
+    if (!video) return;
+    const videoDuration = video.duration;
+    if (!videoDuration || !isFinite(videoDuration) || videoDuration <= 0) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
-    video.currentTime = pct * duration;
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.currentTime = pct * videoDuration;
   };
 
   const handleVolumeChange = (e) => {
@@ -113,15 +115,21 @@ export default function Player() {
         </div>
 
         <div className={styles.bottomBar}>
-          <div className={styles.seekBar} onClick={handleSeek}>
-            <div className={styles.seekFill} style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }} />
+          <div className={styles.seekBar} onClick={handleSeek} onMouseDown={(e) => {
+            const onMove = (ev) => handleSeek(ev);
+            const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+            handleSeek(e);
+          }}>
+            <div className={styles.seekFill} style={{ width: (duration && isFinite(duration) && duration > 0) ? `${(currentTime / duration) * 100}%` : '0%' }} />
           </div>
 
           <div className={styles.controlsRow}>
             <button className={styles.controlBtn} onClick={() => { const video = videoRef.current; video?.paused ? video.play() : video.pause(); }}>
               {isPlaying ? '⏸' : '▶'}
             </button>
-            <span className={styles.time}>{formatTime(currentTime)} / {formatTime(duration)}</span>
+            <span className={styles.time}>{formatTime(currentTime)}{(duration && isFinite(duration) && duration > 0) ? ` / ${formatTime(duration)}` : ''}</span>
             <div className={styles.spacer} />
             <div className={styles.volumeControl}>
               <button className={styles.controlBtn} onClick={() => { const video = videoRef.current; if (video) { video.muted = !video.muted; setIsMuted(!isMuted); } }}>

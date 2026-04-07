@@ -7,8 +7,8 @@
 .closeBtn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background var(--transition-fast); }
 .closeBtn:hover { background: rgba(255, 255, 255, 0.2); }
 .bottomBar { padding: 0 24px 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
-.seekBar { height: 4px; background: rgba(255, 255, 255, 0.2); border-radius: 2px; cursor: pointer; margin-bottom: 12px; transition: height var(--transition-fast); }
-.seekBar:hover { height: 6px; }
+.seekBar { height: 4px; background: rgba(255, 255, 255, 0.2); border-radius: 2px; cursor: pointer; margin-bottom: 12px; transition: height var(--transition-fast); padding: 10px 0; background-clip: content-box; }
+.seekBar:hover { height: 6px; padding: 9px 0; }
 .seekFill { height: 100%; background: var(--accent); border-radius: 2px; position: relative; }
 .seekFill::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border-radius: 50%; background: var(--accent); opacity: 0; transition: opacity var(--transition-fast); }
 .seekBar:hover .seekFill::after { opacity: 1; }
