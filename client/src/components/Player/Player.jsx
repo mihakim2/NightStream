@@ -16,12 +16,14 @@ export default function Player() {
   const [audioTracks, setAudioTracks] = useState([]);
   const [selectedAudioTrack, setSelectedAudioTrack] = useState(0);
   const [aspectRatio, setAspectRatio] = useState('fit');
+  const [playError, setPlayError] = useState(null);
 
   const aspectRatios = ['fit', 'fill', '16:9', '4:3'];
   const isSeekable = duration && isFinite(duration) && duration > 0;
 
   useEffect(() => {
     if (isOpen && videoRef.current) {
+      setPlayError(null);
       attachVideo(videoRef.current);
     }
   }, [isOpen, currentItem, attachVideo]);
@@ -181,10 +183,19 @@ export default function Player() {
         style={getVideoStyle()}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
-        onPlay={() => setIsPlaying(true)}
+        onPlay={() => { setIsPlaying(true); setPlayError(null); }}
         onPause={() => setIsPlaying(false)}
+        onError={() => setPlayError('This stream is unavailable. The provider\'s server may be down.')}
         onClick={handleVideoClick}
       />
+
+      {playError && (
+        <div className={styles.errorOverlay}>
+          <div className={styles.errorIcon}>!</div>
+          <div className={styles.errorText}>{playError}</div>
+          <button className={styles.errorBtn} onClick={close}>Close</button>
+        </div>
+      )}
 
       {/* Skip indicators */}
       {skipIndicator === 'left' && (

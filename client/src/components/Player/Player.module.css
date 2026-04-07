@@ -26,6 +26,11 @@
 .skipIcon { font-size: 36px; }
 .skipText { font-size: 14px; font-weight: 700; }
 .time { font-size: 13px; color: rgba(255, 255, 255, 0.7); font-variant-numeric: tabular-nums; }
+.errorOverlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: rgba(0,0,0,0.85); z-index: 10; }
+.errorIcon { width: 56px; height: 56px; border-radius: 50%; background: rgba(255, 79, 106, 0.15); border: 2px solid var(--danger); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: var(--danger); }
+.errorText { font-size: 15px; color: var(--text-secondary); text-align: center; max-width: 360px; line-height: 1.5; }
+.errorBtn { padding: 10px 28px; font-size: 14px; font-weight: 600; border-radius: var(--radius-sm); background: rgba(255,255,255,0.1); color: var(--text-primary); transition: background var(--transition-fast); }
+.errorBtn:hover { background: rgba(255,255,255,0.15); }
 .spacer { flex: 1; }
 .volumeControl { display: flex; align-items: center; gap: 6px; }
 .volumeSlider { width: 80px; height: 4px; -webkit-appearance: none; appearance: none; background: rgba(255, 255, 255, 0.2); border-radius: 2px; outline: none; border: none; padding: 0; }
