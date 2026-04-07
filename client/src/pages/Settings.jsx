@@ -38,6 +38,11 @@ export default function Settings() {
       setPinError('PIN must be exactly 4 digits.');
       return;
     }
+    // If changing an existing PIN, require the old one first
+    if (hasPin) {
+      const allowed = await parental?.requirePin();
+      if (!allowed) return;
+    }
     await updateSettings({ parentalPin: newPin });
     setNewPin('');
     setPinSaved(true);
@@ -47,6 +52,8 @@ export default function Settings() {
   };
 
   const handleRemovePin = async () => {
+    const allowed = await parental?.requirePin();
+    if (!allowed) return;
     await updateSettings({ parentalPin: null });
     reloadSettings();
     parental?.refreshSettings();
