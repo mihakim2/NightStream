@@ -19,7 +19,18 @@ router.get('/', async (req, res) => {
   if (category) {
     series = series.filter(s => String(s.group) === String(category));
   }
-  res.json(series);
+  // Return lightweight list (no seasons/episodes) for browse view
+  res.json(series.map(s => ({
+    id: s.id,
+    name: s.name,
+    logo: s.logo,
+    group: s.group,
+    plot: s.plot || '',
+    rating: s.rating || '',
+    year: s.year || '',
+    seasonCount: s.seasons ? Object.keys(s.seasons).length : 0,
+    episodeCount: s.seasons ? Object.values(s.seasons).reduce((a, b) => a + b.length, 0) : 0,
+  })));
 });
 
 router.get('/:id', async (req, res) => {
@@ -58,9 +69,19 @@ router.get('/:id', async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   } else {
+    // M3U playlists: series are already grouped with seasons
     const data = await loadPlaylistData(playlist);
     const item = data.series.find(s => String(s.id) === req.params.id);
-    res.json(item || null);
+    if (!item) return res.json(null);
+    res.json({
+      id: item.id,
+      name: item.name,
+      logo: item.logo,
+      plot: item.plot || '',
+      year: item.year || '',
+      rating: item.rating || '',
+      seasons: item.seasons || {},
+    });
   }
 });
 

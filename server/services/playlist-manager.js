@@ -120,18 +120,64 @@ async function loadM3UData(playlist) {
   const items = await parseM3U(playlist.url);
   const liveItems = items.filter(i => i.type === 'live');
   const vodItems = items.filter(i => i.type === 'vod');
-  const seriesItems = items.filter(i => i.type === 'series');
+  const seriesEpisodes = items.filter(i => i.type === 'series');
 
   const extractCategories = (items) => {
     const groups = [...new Set(items.map(i => i.group))];
     return groups.map((g) => ({ id: g, name: g }));
   };
 
+  // Group episodes into series objects with seasons
+  const seriesMap = new Map(); // key: "group|||seriesName" -> series object
+
+  for (const ep of seriesEpisodes) {
+    const seriesKey = `${ep.group}|||${(ep.seriesName || ep.name).toLowerCase()}`;
+
+    if (!seriesMap.has(seriesKey)) {
+      seriesMap.set(seriesKey, {
+        id: `series-${seriesMap.size}`,
+        name: ep.seriesName || ep.name,
+        logo: ep.logo || '',
+        group: ep.group,
+        plot: '',
+        rating: '',
+        year: '',
+        seasons: {},
+      });
+    }
+
+    const series = seriesMap.get(seriesKey);
+    // Use first episode's logo as series logo if we don't have one
+    if (!series.logo && ep.logo) series.logo = ep.logo;
+
+    const seasonNum = String(ep.season || 1);
+    if (!series.seasons[seasonNum]) series.seasons[seasonNum] = [];
+
+    series.seasons[seasonNum].push({
+      id: `ep-${seriesEpisodes.indexOf(ep)}`,
+      episodeNum: ep.episode || series.seasons[seasonNum].length + 1,
+      title: ep.name,
+      plot: '',
+      duration: '',
+      logo: ep.logo || '',
+      url: ep.url,
+    });
+  }
+
+  // Sort episodes within each season
+  for (const series of seriesMap.values()) {
+    for (const seasonNum of Object.keys(series.seasons)) {
+      series.seasons[seasonNum].sort((a, b) => a.episodeNum - b.episodeNum);
+    }
+  }
+
+  const seriesList = [...seriesMap.values()];
+
   return {
     type: 'm3u',
     liveCategories: extractCategories(liveItems),
     vodCategories: extractCategories(vodItems),
-    seriesCategories: extractCategories(seriesItems),
+    seriesCategories: extractCategories(seriesEpisodes),
     live: liveItems.map((item, idx) => ({
       id: String(idx),
       name: item.name,
@@ -147,13 +193,7 @@ async function loadM3UData(playlist) {
       group: item.group,
       url: item.url,
     })),
-    series: seriesItems.map((item, idx) => ({
-      id: String(idx),
-      name: item.name,
-      logo: item.logo,
-      group: item.group,
-      url: item.url,
-    })),
+    series: seriesList,
   };
 }
 

@@ -17,7 +17,11 @@ export function parseM3UText(text) {
       current = parseExtInf(line);
     } else if (current && !line.startsWith('#')) {
       current.url = line;
-      current.type = guessType(current);
+      const classified = classifyItem(current);
+      current.type = classified.type;
+      current.seriesName = classified.seriesName;
+      current.season = classified.season;
+      current.episode = classified.episode;
       items.push(current);
       current = null;
     }
@@ -55,14 +59,48 @@ function parseExtInf(line) {
   return item;
 }
 
-function guessType(item) {
-  const group = item.group.toLowerCase();
+// Episode detection patterns (ordered by specificity)
+const EPISODE_PATTERNS = [
+  // "S01E01" or "S01 E01" or "S1E1" or "S01.E01"
+  /^(.+?)[\s.]*S(\d{1,2})[\s.]*E(\d{1,3})/i,
+  // "Season 2 - Episode 161" or "Season 2 Episode 3"
+  /^(.+?)[\s.]*Season\s*(\d{1,2})[\s.*-]*Episode\s*(\d{1,4})/i,
+  // "Show Name E13" (E followed by 2-3 digits, no S prefix)
+  /^(.+?)[\s.]+E(\d{2,3})(?:\b|[\s.])/i,
+];
+
+function classifyItem(item) {
   const url = item.url.toLowerCase();
-  if (group.includes('vod') || group.includes('movie') || url.endsWith('.mp4') || url.endsWith('.mkv')) {
-    return 'vod';
+  const group = item.group.toLowerCase();
+  const name = item.name;
+
+  // Live streams: not MP4/MKV
+  if (!url.endsWith('.mp4') && !url.endsWith('.mkv') && !url.includes('/movie/') && !url.includes('/series/')) {
+    if (!group.includes('vod') && !group.includes('movie') && !group.includes('series')) {
+      return { type: 'live', seriesName: null, season: null, episode: null };
+    }
   }
+
+  // Try to detect episode patterns in the name
+  for (const pattern of EPISODE_PATTERNS) {
+    const match = name.match(pattern);
+    if (match) {
+      let seriesName = match[1].replace(/[.\-_]+$/, '').replace(/\./g, ' ').trim();
+      // For 2-group match (no season), default to season 1
+      const season = match[3] !== undefined ? parseInt(match[2]) : 1;
+      const episode = match[3] !== undefined ? parseInt(match[3]) : parseInt(match[2]);
+
+      if (seriesName) {
+        return { type: 'series', seriesName, season, episode };
+      }
+    }
+  }
+
+  // Group name hints
   if (group.includes('series') || group.includes('episode')) {
-    return 'series';
+    return { type: 'series', seriesName: null, season: null, episode: null };
   }
-  return 'live';
+
+  // Default: VOD (movie)
+  return { type: 'vod', seriesName: null, season: null, episode: null };
 }
