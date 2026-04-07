@@ -1,7 +1,35 @@
 import { Router } from 'express';
 import { Readable } from 'stream';
+import https from 'https';
+import http from 'http';
 
 const router = Router();
+
+// Custom fetch that ignores self-signed SSL certs (common with IPTV providers)
+const insecureAgent = new https.Agent({ rejectUnauthorized: false });
+
+async function proxyFetch(url, maxRedirects = 5) {
+  return new Promise((resolve, reject) => {
+    const mod = url.startsWith('https') ? https : http;
+    const options = { agent: url.startsWith('https') ? insecureAgent : undefined };
+    const req = mod.get(url, options, (res) => {
+      // Follow redirects
+      if ((res.statusCode === 301 || res.statusCode === 302 || res.statusCode === 307 || res.statusCode === 308) && res.headers.location && maxRedirects > 0) {
+        res.resume(); // drain the response
+        const redirectUrl = new URL(res.headers.location, url).href;
+        return proxyFetch(redirectUrl, maxRedirects - 1).then(resolve).catch(reject);
+      }
+      resolve({
+        ok: res.statusCode >= 200 && res.statusCode < 300,
+        status: res.statusCode,
+        headers: { get: (key) => res.headers[key.toLowerCase()] },
+        body: res,
+        text: () => new Promise((r, j) => { let d = ''; res.on('data', c => d += c); res.on('end', () => r(d)); res.on('error', j); }),
+      });
+    });
+    req.on('error', reject);
+  });
+}
 
 router.get('/stream', async (req, res) => {
   const { url } = req.query;
@@ -9,7 +37,7 @@ router.get('/stream', async (req, res) => {
 
   try {
     const targetUrl = decodeURIComponent(url);
-    const response = await fetch(targetUrl);
+    const response = await proxyFetch(targetUrl);
 
     if (!response.ok) {
       return res.status(response.status).json({ error: `Upstream error: ${response.status}` });
