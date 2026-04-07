@@ -16,7 +16,8 @@ const DEFAULT_SETTINGS = {
 };
 
 router.get('/', async (req, res) => {
-  const settings = await readStore('settings.json', DEFAULT_SETTINGS);
+  const stored = await readStore('settings.json', {});
+  const settings = { ...DEFAULT_SETTINGS, ...stored };
   res.json(settings);
 });
 
