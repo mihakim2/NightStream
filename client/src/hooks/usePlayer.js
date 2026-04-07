@@ -47,7 +47,7 @@ export function usePlayer() {
 
     const isHlsStream = url.endsWith('.m3u8');
     const isTsStream = url.endsWith('.ts');
-    const isMp4Stream = url.endsWith('.mp4') || url.endsWith('.mkv');
+    const isMkvStream = url.endsWith('.mkv');
 
     if (isHlsStream) {
       // HLS stream — use HLS.js
@@ -63,11 +63,11 @@ export function usePlayer() {
         videoElement.src = streamUrl;
         videoElement.play().catch(() => {});
       }
-    } else if (isTsStream && mpegts.isSupported()) {
-      // MPEG-TS stream — use mpegts.js
+    } else if ((isTsStream || isMkvStream) && mpegts.isSupported()) {
+      // MPEG-TS or MKV stream — use mpegts.js to demux and remux for browser
       const player = mpegts.createPlayer({
-        type: 'mpegts',
-        isLive: true,
+        type: isMkvStream ? 'mkv' : 'mpegts',
+        isLive: isTsStream,
         url: streamUrl,
       });
       player.attachMediaElement(videoElement);
