@@ -21,7 +21,12 @@ function proxyRequest(url, headers = {}, maxRedirects = 5) {
     const req = mod.request(options, (res) => {
       if ([301, 302, 307, 308].includes(res.statusCode) && res.headers.location && maxRedirects > 0) {
         res.resume();
-        const redirectUrl = new URL(res.headers.location, url).href;
+        let redirectUrl = new URL(res.headers.location, url).href;
+        // Xtream Codes CDN sometimes returns wildcard hostnames like *.domain.com
+        // Replace * with a working subdomain — try 'vod', as that commonly resolves
+        if (redirectUrl.includes('//*')) {
+          redirectUrl = redirectUrl.replace('//*.', '//vod.');
+        }
         return proxyRequest(redirectUrl, headers, maxRedirects - 1).then(resolve).catch(reject);
       }
       resolve(res);
