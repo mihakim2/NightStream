@@ -1,4 +1,93 @@
-.sidebar { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 2px; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 8px; }
-.item { padding: 10px 14px; font-size: 13px; font-weight: 500; text-align: left; border-radius: 6px; color: var(--text-secondary); transition: all var(--transition-fast); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item:hover { color: var(--text-primary); background: var(--surface); }
-.active { color: var(--accent); background: rgba(79, 142, 255, 0.1); font-weight: 600; }
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.searchWrapper {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  padding-bottom: 6px;
+  z-index: 1;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.searchInput:focus {
+  border-color: var(--accent);
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.item {
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.3;
+  width: 100%;
+}
+
+.item:hover {
+  color: var(--text-primary);
+  background: var(--surface);
+}
+
+.active {
+  color: var(--accent);
+  background: rgba(79, 142, 255, 0.1);
+  font-weight: 600;
+}
+
+.itemName {
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+.lockIcon {
+  font-size: 11px;
+  align-self: flex-start;
+  margin-top: 1px;
+  opacity: 0.8;
+}

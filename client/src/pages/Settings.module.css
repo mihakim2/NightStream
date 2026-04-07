@@ -22,3 +22,12 @@
 .saveBtn { padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: var(--radius-sm); background: var(--accent); color: white; transition: all var(--transition-fast); white-space: nowrap; }
 .saveBtn:hover { background: var(--accent-hover); }
 .about { font-size: 13px; color: var(--text-secondary); }
+.pinRow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pinInput { padding: 10px 14px; font-size: 14px; width: 160px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary); outline: none; letter-spacing: 4px; }
+.pinInput:focus { border-color: var(--accent); }
+.pinError { font-size: 12px; color: var(--danger); margin: 6px 0 0; }
+.keywordsSection { margin-top: 16px; }
+.keywordList { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.keyword { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 12px; font-weight: 500; border-radius: 20px; background: rgba(255,255,255,0.07); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); }
+.kwRemove { font-size: 16px; line-height: 1; color: var(--text-secondary); cursor: pointer; padding: 0; background: none; border: none; display: flex; align-items: center; transition: color 0.15s; }
+.kwRemove:hover { color: var(--danger); }

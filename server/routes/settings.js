@@ -11,6 +11,8 @@ const DEFAULT_SETTINGS = {
     subtitleLanguage: '',
     aspectRatio: 'fit',
   },
+  parentalPin: null,
+  parentalKeywords: ['adult', '18+', 'xxx', 'for adults'],
 };
 
 router.get('/', async (req, res) => {
@@ -23,6 +25,15 @@ router.put('/', async (req, res) => {
   const updated = { ...current, ...req.body };
   await writeStore('settings.json', updated);
   res.json(updated);
+});
+
+router.post('/verify-pin', async (req, res) => {
+  const { pin } = req.body || {};
+  const settings = await readStore('settings.json', DEFAULT_SETTINGS);
+  if (!settings.parentalPin) {
+    return res.json({ ok: true });
+  }
+  res.json({ ok: String(pin) === String(settings.parentalPin) });
 });
 
 export default router;

@@ -19,7 +19,7 @@ export default function Layout({ children }) {
       <nav className={styles.nav}>
         <div className={styles.brand} onClick={() => navigate('/live')}>
           <span className={styles.logo}>▶</span>
-          <span className={styles.brandName}>XtreamPlayer</span>
+          <span className={styles.brandName}>Astra</span>
         </div>
         <div className={styles.navItems}>
           {NAV_ITEMS.map(item => (

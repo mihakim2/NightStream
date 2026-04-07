@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout.jsx';
 import Player from './components/Player/Player.jsx';
+import PinModal from './components/PinModal/PinModal.jsx';
 import Setup from './pages/Setup.jsx';
 import LiveTV from './pages/LiveTV.jsx';
 import Movies from './pages/Movies.jsx';
@@ -13,9 +14,11 @@ import Settings from './pages/Settings.jsx';
 import SearchBar from './components/Search/SearchBar.jsx';
 import SearchResults from './components/Search/SearchResults.jsx';
 import { usePlayer } from './hooks/usePlayer.js';
+import { useParental } from './hooks/useParental.js';
 import { getPlaylists, searchAll } from './api/client.js';
 
 export const PlayerContext = React.createContext(null);
+export const ParentalContext = React.createContext(null);
 
 function SearchPage() {
   const [query, setQuery] = React.useState('');
@@ -39,6 +42,7 @@ function SearchPage() {
 
 export default function App() {
   const player = usePlayer();
+  const parental = useParental();
   const [hasPlaylist, setHasPlaylist] = useState(null);
 
   useEffect(() => {
@@ -57,31 +61,39 @@ export default function App() {
 
   return (
     <PlayerContext.Provider value={player}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/setup" element={<Setup />} />
-          <Route path="/*" element={
-            hasPlaylist ? (
-              <Layout>
-                <Routes>
-                  <Route path="/live" element={<LiveTV />} />
-                  <Route path="/movies" element={<Movies />} />
-                  <Route path="/series" element={<SeriesPage />} />
-                  <Route path="/series/:id" element={<SeriesDetail />} />
-                  <Route path="/epg" element={<EPGPage />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/search" element={<SearchPage />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="*" element={<Navigate to="/live" replace />} />
-                </Routes>
-              </Layout>
-            ) : (
-              <Navigate to="/setup" replace />
-            )
-          } />
-        </Routes>
-      </BrowserRouter>
-      <Player />
+      <ParentalContext.Provider value={parental}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/setup" element={<Setup />} />
+            <Route path="/*" element={
+              hasPlaylist ? (
+                <Layout>
+                  <Routes>
+                    <Route path="/live" element={<LiveTV />} />
+                    <Route path="/movies" element={<Movies />} />
+                    <Route path="/series" element={<SeriesPage />} />
+                    <Route path="/series/:id" element={<SeriesDetail />} />
+                    <Route path="/epg" element={<EPGPage />} />
+                    <Route path="/favorites" element={<Favorites />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="*" element={<Navigate to="/live" replace />} />
+                  </Routes>
+                </Layout>
+              ) : (
+                <Navigate to="/setup" replace />
+              )
+            } />
+          </Routes>
+        </BrowserRouter>
+        <Player />
+        {parental.showPinModal && (
+          <PinModal
+            onVerify={parental.verifyPin}
+            onDismiss={parental.dismissPin}
+          />
+        )}
+      </ParentalContext.Provider>
     </PlayerContext.Provider>
   );
 }
