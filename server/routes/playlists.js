@@ -34,6 +34,11 @@ router.post('/:id/activate', async (req, res) => {
   res.json({ ok: true });
 });
 
+router.post('/refresh', async (req, res) => {
+  clearCache();
+  res.json({ ok: true });
+});
+
 router.post('/test', async (req, res) => {
   try {
     const { type, url, server, username, password } = req.body;

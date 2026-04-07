@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import fetch from 'node-fetch';
+import { Readable } from 'stream';
 
 const router = Router();
 
@@ -9,11 +9,7 @@ router.get('/stream', async (req, res) => {
 
   try {
     const targetUrl = decodeURIComponent(url);
-    const response = await fetch(targetUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
-      },
-    });
+    const response = await fetch(targetUrl);
 
     if (!response.ok) {
       return res.status(response.status).json({ error: `Upstream error: ${response.status}` });
@@ -31,8 +27,25 @@ router.get('/stream', async (req, res) => {
       return res.send(rewritten);
     }
 
-    res.set('Content-Type', contentType || 'application/octet-stream');
-    response.body.pipe(res);
+    // Fix content type for TS streams that have wrong content-type
+    let finalContentType = contentType || 'application/octet-stream';
+    if (targetUrl.endsWith('.ts') && !finalContentType.includes('video')) {
+      finalContentType = 'video/mp2t';
+    }
+    res.set('Content-Type', finalContentType);
+
+    // Pipe the response body to the client
+    const reader = response.body;
+    if (reader && typeof reader.pipe === 'function') {
+      reader.pipe(res);
+    } else if (reader && typeof reader.getReader === 'function') {
+      // Web ReadableStream (native fetch) - convert to Node stream
+      const nodeStream = Readable.fromWeb(reader);
+      nodeStream.pipe(res);
+    } else {
+      const buffer = await response.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

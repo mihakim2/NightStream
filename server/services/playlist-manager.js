@@ -124,7 +124,7 @@ async function loadM3UData(playlist) {
 
   const extractCategories = (items) => {
     const groups = [...new Set(items.map(i => i.group))];
-    return groups.map((g, idx) => ({ id: String(idx), name: g }));
+    return groups.map((g) => ({ id: g, name: g }));
   };
 
   return {
