@@ -1,0 +1,13 @@
+.card { width: 160px; flex-shrink: 0; cursor: pointer; animation: fadeIn var(--transition-normal) ease both; transition: transform var(--transition-fast); }
+.card:hover { transform: scale(1.04); }
+.posterWrapper { width: 160px; height: 220px; border-radius: var(--radius-sm); overflow: hidden; position: relative; background: var(--surface); }
+.poster { width: 100%; height: 100%; object-fit: cover; transition: opacity var(--transition-normal); }
+.posterPlaceholder { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.04) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; }
+.posterFallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; background: linear-gradient(135deg, #1c1c30, #2a1c40); color: var(--text-secondary); }
+.favBtn { position: absolute; top: 8px; right: 8px; font-size: 14px; padding: 4px; opacity: 0; transition: opacity var(--transition-fast); background: rgba(0, 0, 0, 0.6); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.card:hover .favBtn { opacity: 0.8; }
+.favBtn:hover { opacity: 1 !important; }
+.favActive { opacity: 1 !important; }
+.rating { position: absolute; bottom: 8px; left: 8px; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); border-radius: 4px; }
+.title { font-size: 13px; font-weight: 600; margin-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.year { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }

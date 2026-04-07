@@ -1,0 +1,13 @@
+.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 200; animation: fadeIn 200ms ease; }
+.modal { width: 90%; max-width: 720px; max-height: 85vh; overflow-y: auto; background: var(--surface); border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.06); position: relative; animation: fadeInScale var(--transition-normal) ease; }
+.closeBtn { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, 0.06); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-secondary); transition: all var(--transition-fast); z-index: 1; }
+.closeBtn:hover { background: rgba(255, 255, 255, 0.12); color: var(--text-primary); }
+.content { display: flex; gap: 24px; padding: 32px; }
+.posterCol { flex-shrink: 0; }
+.poster { width: 200px; border-radius: var(--radius-sm); object-fit: cover; }
+.details { flex: 1; min-width: 0; }
+.title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+.meta { display: flex; gap: 12px; font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.plot { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 20px; }
+.playBtn { padding: 12px 32px; font-size: 15px; font-weight: 600; background: var(--accent); color: white; border-radius: var(--radius-sm); transition: all var(--transition-fast); }
+.playBtn:hover { background: var(--accent-hover); transform: scale(1.02); }
