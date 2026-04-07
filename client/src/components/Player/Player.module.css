@@ -31,3 +31,81 @@
 .volumeSlider { width: 80px; height: 4px; -webkit-appearance: none; appearance: none; background: rgba(255, 255, 255, 0.2); border-radius: 2px; outline: none; border: none; padding: 0; }
 .volumeSlider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: white; cursor: pointer; }
 .trackSelect { background: rgba(255, 255, 255, 0.1); border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; color: white; }
+
+@media (max-width: 768px) {
+  .topBar {
+    padding: 12px 16px;
+  }
+
+  .nowPlaying {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 60px);
+  }
+
+  .closeBtn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .bottomBar {
+    padding: 0 16px 16px;
+  }
+
+  /* Thicker seek bar for easier touch */
+  .seekBar {
+    height: 6px;
+    padding: 14px 0;
+    background-clip: content-box;
+  }
+
+  .seekBar:hover {
+    height: 6px;
+    padding: 14px 0;
+  }
+
+  .controlsRow {
+    gap: 8px;
+  }
+
+  /* Larger touch targets for all controls */
+  .controlBtn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .playPauseBtn {
+    min-width: 56px;
+    min-height: 56px;
+    font-size: 28px;
+    padding: 12px;
+  }
+
+  .skipBtn {
+    min-width: 54px;
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .skipBtnIcon {
+    font-size: 24px;
+  }
+
+  .skipBtnLabel {
+    font-size: 13px;
+  }
+
+  .volumeControl {
+    display: none; /* hide volume slider on mobile — use hardware buttons */
+  }
+
+  .time {
+    font-size: 12px;
+  }
+}

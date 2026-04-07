@@ -22,3 +22,35 @@
 .testBtn:disabled, .submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 .submitBtn { flex: 1; padding: 12px; font-size: 14px; font-weight: 600; border-radius: var(--radius-sm); background: var(--accent); color: white; transition: all var(--transition-fast); }
 .submitBtn:hover { background: var(--accent-hover); }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+
+  .card {
+    padding: 24px 16px;
+    border-radius: var(--radius-sm);
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .fieldRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .testBtn,
+  .submitBtn {
+    min-height: 44px;
+    padding: 12px;
+  }
+}

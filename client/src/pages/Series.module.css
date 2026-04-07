@@ -4,3 +4,26 @@
 .categorySelect { margin-left: auto; padding: 8px 12px; font-size: 13px; background: var(--surface); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm); color: var(--text-primary); min-width: 180px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
 .empty { text-align: center; padding: 60px 0; color: var(--text-secondary); font-size: 15px; }
+
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .categorySelect {
+    width: 100%;
+    margin-left: 0;
+    min-width: unset;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}

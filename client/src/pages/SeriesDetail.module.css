@@ -22,3 +22,54 @@
 .epDuration { font-size: 12px; color: var(--text-secondary); flex-shrink: 0; }
 .epPlay { font-size: 14px; opacity: 0; transition: opacity var(--transition-fast); }
 .episode:hover .epPlay { opacity: 0.8; }
+
+@media (max-width: 768px) {
+  .page {
+    max-width: 100%;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .poster {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .meta {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .episode {
+    padding: 12px 10px;
+    gap: 10px;
+  }
+
+  .epNumber {
+    width: 24px;
+    font-size: 13px;
+  }
+
+  .epTitle {
+    font-size: 13px;
+  }
+
+  .epDuration {
+    display: none;
+  }
+
+  .seasonTab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}

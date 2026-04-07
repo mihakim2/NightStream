@@ -91,3 +91,9 @@
   margin-top: 1px;
   opacity: 0.8;
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

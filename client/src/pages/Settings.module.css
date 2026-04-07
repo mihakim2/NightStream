@@ -1,5 +1,6 @@
 .page { max-width: 700px; }
 .title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 32px; }
+
 .section { margin-bottom: 36px; }
 .sectionTitle { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); margin-bottom: 12px; }
 .hint { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
@@ -31,3 +32,54 @@
 .keyword { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 12px; font-weight: 500; border-radius: 20px; background: rgba(255,255,255,0.07); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); }
 .kwRemove { font-size: 16px; line-height: 1; color: var(--text-secondary); cursor: pointer; padding: 0; background: none; border: none; display: flex; align-items: center; transition: color 0.15s; }
 .kwRemove:hover { color: var(--danger); }
+
+@media (max-width: 768px) {
+  .page {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .section {
+    margin-bottom: 24px;
+  }
+
+  .fieldRow {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .playlistItem {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .plActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .pinRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pinInput {
+    width: 100%;
+  }
+
+  .saveBtn {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+
+  .addBtn {
+    width: 100%;
+    padding: 12px;
+    min-height: 44px;
+  }
+}

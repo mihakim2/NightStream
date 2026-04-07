@@ -8,3 +8,41 @@
 .rowScroll > * { scroll-snap-align: start; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
 .empty { text-align: center; padding: 60px 0; color: var(--text-secondary); font-size: 15px; }
+
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .categorySelect {
+    width: 100%;
+    margin-left: 0;
+    min-width: unset;
+  }
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .rowTitle {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  /* Horizontal scroll rows — slightly smaller cards */
+  .rowScroll {
+    gap: 10px;
+  }
+
+  /* Grid: 3 columns on mobile */
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}

@@ -71,6 +71,7 @@ export default function LiveTV() {
 
   return (
     <div className={styles.page}>
+      {/* Sidebar: hidden via CSS on mobile */}
       <CategorySidebar
         categories={categories || []}
         selected={selectedCategory}
@@ -78,6 +79,18 @@ export default function LiveTV() {
         restrictedIds={restrictedIds}
       />
       <div className={styles.main}>
+        {/* Mobile category select — shown only on small screens */}
+        <select
+          className={styles.mobileCategory}
+          value={selectedCategory || ''}
+          onChange={(e) => handleCategorySelect(e.target.value || null)}
+        >
+          <option value="">All Categories</option>
+          {(categories || []).map(c => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
+
         <div className={styles.header}>
           <h2 className={styles.title}>Live TV</h2>
           <div className={styles.viewToggle}>

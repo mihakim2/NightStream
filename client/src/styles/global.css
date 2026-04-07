@@ -80,3 +80,30 @@ input:focus, select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
 }
+
+/* ── Mobile global tweaks ── */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow at the page level */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Suppress tiny scrollbars on mobile */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Ensure all interactive elements meet 44px touch target */
+  button, [role="button"], a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Inputs: full width by default on mobile */
+  input, select {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+}

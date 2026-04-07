@@ -13,3 +13,39 @@
 .programNow { background: rgba(79, 142, 255, 0.2); border-color: var(--accent); }
 .programTitle { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .nowLine { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--danger); z-index: 3; pointer-events: none; }
+
+@media (max-width: 768px) {
+  .channelList {
+    width: 100px;
+  }
+
+  .channelRow {
+    padding: 0 6px;
+    height: 52px;
+  }
+
+  .channelName {
+    font-size: 10px;
+  }
+
+  .timeSlot {
+    font-size: 10px;
+    padding: 0 4px;
+  }
+
+  .programTitle {
+    font-size: 10px;
+  }
+
+  .timeHeader {
+    height: 30px;
+  }
+
+  .timeRow {
+    height: 30px;
+  }
+
+  .programRow {
+    height: 52px;
+  }
+}

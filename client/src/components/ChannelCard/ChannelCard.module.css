@@ -12,3 +12,43 @@
 .card:hover .favBtn { opacity: 0.7; }
 .favBtn:hover { opacity: 1 !important; }
 .favActive { opacity: 1 !important; }
+
+@media (max-width: 768px) {
+  .card {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  /* Always show fav button on mobile (no hover) */
+  .favBtn {
+    opacity: 0.5;
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card:hover .favBtn {
+    opacity: 0.5;
+  }
+
+  .favBtn:hover,
+  .favActive {
+    opacity: 1 !important;
+  }
+
+  /* Allow channel name to wrap on mobile instead of truncating */
+  .name {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .program {
+    font-size: 11px;
+  }
+}
