@@ -1,22 +1,23 @@
 # NightStream
 
-A self-hosted, browser-based IPTV player. Connect your M3U playlist or Xtream Codes provider and stream live TV, movies, and series from any browser on your network.
+A self-hosted, browser-based IPTV playlist player. Point it at your M3U playlist or Xtream Codes credentials and watch from any browser on your network.
 
-Built as a personal alternative to apps like iboIPTV — runs locally, no cloud, no subscriptions.
+Runs locally — no cloud, no tracking, no third-party services.
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ## Features
 
+- **Playlist Support** — M3U URLs and Xtream Codes API
 - **Live TV** — Browse channels by category, with EPG program info
-- **Movies** — Netflix-style browsable VOD library
-- **Series** — Season and episode navigation
+- **VOD** — Browsable on-demand library with category filtering
+- **Series** — Smart episode detection with season/episode grouping
 - **Program Guide** — Timeline-based EPG grid
-- **Video Player** — HLS and MPEG-TS playback, keyboard shortcuts, seek, skip 30s, aspect ratio control, multi-audio track support
+- **Video Player** — HLS, MPEG-TS, and MKV playback with keyboard shortcuts, seek, skip 30s, aspect ratio control, multi-audio track support
 - **Search** — Real-time search across all content
-- **Favorites** — Save channels, movies, and series
-- **Parental Controls** — PIN-lock adult content categories
-- **Dark Theme** — Cinematic dark UI designed for big screens
+- **Favorites** — Save channels and content for quick access
+- **Parental Controls** — PIN-lock categories by keyword
+- **Dark Theme** — Cinematic UI designed for big screens and mobile
 - **Multiple Playlists** — Add and switch between providers
 
 ## Quick Start
@@ -34,18 +35,18 @@ Open [http://localhost:5173](http://localhost:5173) and add your playlist.
 ### Requirements
 
 - Node.js 18+
-- An M3U playlist URL or Xtream Codes credentials from your IPTV provider
+- An M3U playlist URL or Xtream Codes credentials
 
 ## How It Works
 
 NightStream runs two processes:
 
-- **Backend** (port 3000) — Express server that parses playlists, proxies streams (bypassing CORS and SSL issues), fetches EPG data, and stores settings/favorites as local JSON files
+- **Backend** (port 3000) — Express server that parses playlists, proxies streams (handling CORS, SSL, and range requests), fetches EPG data, and stores settings/favorites as local JSON files
 - **Frontend** (port 5173) — React SPA with HLS.js and mpegts.js for video playback
 
-All data stays on your machine. Nothing is sent anywhere.
+All data stays on your machine. Nothing is sent to any external service.
 
-## Access Across Your Home Network
+## Access Across Your Network
 
 ### Option 1: Direct IP
 
@@ -60,9 +61,9 @@ Find your machine's local IP (`ifconfig` or `ipconfig`) and open `http://192.168
 3. Find the NightStream machine's Tailscale IP: `tailscale ip -4`
 4. Open `http://<tailscale-ip>:5173` from any device on your tailnet
 
-This works from anywhere — not just your local network. Stream from a hotel, office, or phone.
+This works from anywhere — not just your local network.
 
-**Tip:** For a stable hostname, enable [MagicDNS](https://tailscale.com/kb/1081/magicdns/) and access via `http://your-machine-name:5173`.
+**Tip:** Enable [MagicDNS](https://tailscale.com/kb/1081/magicdns/) for a friendly hostname like `http://your-machine-name:5173`.
 
 ## Keyboard Shortcuts (Player)
 
