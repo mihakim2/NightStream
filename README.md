@@ -51,7 +51,7 @@ No cloud. No tracking. No subscriptions. Just your playlist and a browser.
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/nightstream.git
+git clone https://github.com/mihakim2/NightStream.git
 cd nightstream
 
 # Install dependencies
