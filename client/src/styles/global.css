@@ -1,0 +1,80 @@
+:root {
+  --bg: #0a0a0f;
+  --surface: #141420;
+  --surface-hover: #1c1c30;
+  --text-primary: #e8e8f0;
+  --text-secondary: #8888a0;
+  --accent: #4f8eff;
+  --accent-hover: #6ba0ff;
+  --danger: #ff4f6a;
+  --success: #4fff8e;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --glass-bg: rgba(20, 20, 32, 0.8);
+  --glass-blur: blur(20px);
+  --transition-fast: 200ms ease;
+  --transition-normal: 300ms ease;
+  --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input, select {
+  font-family: inherit;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
