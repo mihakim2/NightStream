@@ -3,14 +3,39 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout.jsx';
 import Player from './components/Player/Player.jsx';
 import Setup from './pages/Setup.jsx';
+import LiveTV from './pages/LiveTV.jsx';
+import Movies from './pages/Movies.jsx';
+import SeriesPage from './pages/Series.jsx';
+import SeriesDetail from './pages/SeriesDetail.jsx';
+import EPGPage from './pages/EPG.jsx';
+import Favorites from './pages/Favorites.jsx';
+import Settings from './pages/Settings.jsx';
+import SearchBar from './components/Search/SearchBar.jsx';
+import SearchResults from './components/Search/SearchResults.jsx';
 import { usePlayer } from './hooks/usePlayer.js';
-import { getPlaylists } from './api/client.js';
-
-function Placeholder({ name }) {
-  return <div style={{ color: 'var(--text-secondary)', fontSize: 18 }}>{name} — coming soon</div>;
-}
+import { getPlaylists, searchAll } from './api/client.js';
 
 export const PlayerContext = React.createContext(null);
+
+function SearchPage() {
+  const [query, setQuery] = React.useState('');
+  const [results, setResults] = React.useState(null);
+
+  React.useEffect(() => {
+    if (query.length < 2) { setResults(null); return; }
+    const timer = setTimeout(() => {
+      searchAll(query).then(setResults).catch(() => {});
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  return (
+    <div>
+      <SearchBar value={query} onChange={setQuery} />
+      <SearchResults results={results} />
+    </div>
+  );
+}
 
 export default function App() {
   const player = usePlayer();
@@ -39,14 +64,14 @@ export default function App() {
             hasPlaylist ? (
               <Layout>
                 <Routes>
-                  <Route path="/live" element={<Placeholder name="Live TV" />} />
-                  <Route path="/movies" element={<Placeholder name="Movies" />} />
-                  <Route path="/series" element={<Placeholder name="Series" />} />
-                  <Route path="/series/:id" element={<Placeholder name="Series Detail" />} />
-                  <Route path="/epg" element={<Placeholder name="EPG" />} />
-                  <Route path="/favorites" element={<Placeholder name="Favorites" />} />
-                  <Route path="/search" element={<Placeholder name="Search" />} />
-                  <Route path="/settings" element={<Placeholder name="Settings" />} />
+                  <Route path="/live" element={<LiveTV />} />
+                  <Route path="/movies" element={<Movies />} />
+                  <Route path="/series" element={<SeriesPage />} />
+                  <Route path="/series/:id" element={<SeriesDetail />} />
+                  <Route path="/epg" element={<EPGPage />} />
+                  <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<Navigate to="/live" replace />} />
                 </Routes>
               </Layout>

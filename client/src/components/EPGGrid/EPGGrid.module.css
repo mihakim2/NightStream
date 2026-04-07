@@ -1,0 +1,15 @@
+.container { display: flex; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); }
+.channelList { width: 180px; flex-shrink: 0; border-right: 1px solid rgba(255, 255, 255, 0.06); z-index: 2; background: var(--surface); }
+.timeHeader { height: 36px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.channelRow { height: 56px; display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+.channelName { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gridScroll { flex: 1; overflow-x: auto; overflow-y: hidden; position: relative; }
+.timeRow { display: flex; height: 36px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); position: sticky; top: 0; background: var(--surface); z-index: 1; }
+.timeSlot { display: flex; align-items: center; padding: 0 8px; font-size: 11px; color: var(--text-secondary); border-left: 1px solid rgba(255, 255, 255, 0.04); flex-shrink: 0; }
+.gridBody { position: relative; }
+.programRow { position: relative; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+.program { position: absolute; top: 2px; height: calc(100% - 4px); background: rgba(79, 142, 255, 0.12); border: 1px solid rgba(79, 142, 255, 0.2); border-radius: 4px; padding: 0 8px; display: flex; align-items: center; cursor: pointer; overflow: hidden; transition: background var(--transition-fast); }
+.program:hover { background: rgba(79, 142, 255, 0.2); }
+.programNow { background: rgba(79, 142, 255, 0.2); border-color: var(--accent); }
+.programTitle { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nowLine { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--danger); z-index: 3; pointer-events: none; }

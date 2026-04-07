@@ -1,0 +1,10 @@
+.page { max-width: 100%; }
+.header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.categorySelect { margin-left: auto; padding: 8px 12px; font-size: 13px; background: var(--surface); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm); color: var(--text-primary); min-width: 180px; }
+.row { margin-bottom: 32px; }
+.rowTitle { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
+.rowScroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; }
+.rowScroll > * { scroll-snap-align: start; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+.empty { text-align: center; padding: 60px 0; color: var(--text-secondary); font-size: 15px; }

@@ -1,0 +1,12 @@
+.page { display: flex; gap: 24px; }
+.main { flex: 1; min-width: 0; }
+.header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.count { font-size: 13px; color: var(--text-secondary); }
+.viewToggle { display: flex; gap: 2px; background: var(--surface); border-radius: 6px; padding: 2px; margin-left: auto; }
+.viewBtn { padding: 6px 10px; font-size: 14px; border-radius: 4px; color: var(--text-secondary); transition: all var(--transition-fast); }
+.viewBtn:hover { color: var(--text-primary); }
+.viewActive { background: var(--accent); color: white; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+.list { display: flex; flex-direction: column; gap: 4px; }
+.empty { text-align: center; padding: 60px 0; color: var(--text-secondary); font-size: 15px; }

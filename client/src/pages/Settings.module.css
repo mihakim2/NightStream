@@ -1,0 +1,24 @@
+.page { max-width: 700px; }
+.title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 32px; }
+.section { margin-bottom: 36px; }
+.sectionTitle { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); margin-bottom: 12px; }
+.hint { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+.playlists { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.playlistItem { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid transparent; }
+.activePl { border-color: rgba(79, 142, 255, 0.3); }
+.plInfo { flex: 1; }
+.plName { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.activeBadge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: rgba(79, 142, 255, 0.15); color: var(--accent); }
+.plType { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.plActions { display: flex; gap: 8px; }
+.actionBtn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 6px; background: rgba(79, 142, 255, 0.1); color: var(--accent); transition: all var(--transition-fast); }
+.actionBtn:hover { background: rgba(79, 142, 255, 0.2); }
+.dangerBtn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 6px; background: rgba(255, 79, 106, 0.1); color: var(--danger); transition: all var(--transition-fast); }
+.dangerBtn:hover { background: rgba(255, 79, 106, 0.2); }
+.addBtn { padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: var(--radius-sm); background: var(--surface); border: 1px dashed rgba(255, 255, 255, 0.15); color: var(--text-secondary); transition: all var(--transition-fast); }
+.addBtn:hover { border-color: var(--accent); color: var(--accent); }
+.fieldRow { display: flex; gap: 12px; }
+.input { flex: 1; padding: 10px 14px; font-size: 14px; }
+.saveBtn { padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: var(--radius-sm); background: var(--accent); color: white; transition: all var(--transition-fast); white-space: nowrap; }
+.saveBtn:hover { background: var(--accent-hover); }
+.about { font-size: 13px; color: var(--text-secondary); }
