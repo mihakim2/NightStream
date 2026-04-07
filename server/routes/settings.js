@@ -21,9 +21,15 @@ router.get('/', async (req, res) => {
   res.json(settings);
 });
 
+const ALLOWED_KEYS = ['activePlaylistId', 'epgUrl', 'playerDefaults', 'parentalPin', 'parentalKeywords'];
+
 router.put('/', async (req, res) => {
   const current = await readStore('settings.json', DEFAULT_SETTINGS);
-  const updated = { ...current, ...req.body };
+  const updates = {};
+  for (const key of ALLOWED_KEYS) {
+    if (key in req.body) updates[key] = req.body[key];
+  }
+  const updated = { ...current, ...updates };
   await writeStore('settings.json', updated);
   res.json(updated);
 });

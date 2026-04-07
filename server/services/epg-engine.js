@@ -76,13 +76,15 @@ function extractText(field) {
 
 function parseXmltvDate(str) {
   if (!str) return 0;
-  const clean = str.replace(/\s.*$/, '');
-  const y = clean.substring(0, 4);
-  const m = clean.substring(4, 6);
-  const d = clean.substring(6, 8);
-  const h = clean.substring(8, 10);
-  const min = clean.substring(10, 12);
-  const s = clean.substring(12, 14);
+  // XMLTV format: "20260407120000 +0300" or "20260407120000"
+  const match = str.match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\s*([+-]\d{4})?/);
+  if (!match) return 0;
+  const [, y, m, d, h, min, s, tz] = match;
+  if (tz) {
+    // Parse timezone offset like +0300 -> +03:00
+    const tzFormatted = tz.slice(0, 3) + ':' + tz.slice(3);
+    return new Date(`${y}-${m}-${d}T${h}:${min}:${s}${tzFormatted}`).getTime();
+  }
   return new Date(`${y}-${m}-${d}T${h}:${min}:${s}Z`).getTime();
 }
 

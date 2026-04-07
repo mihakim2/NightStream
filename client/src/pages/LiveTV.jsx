@@ -60,8 +60,7 @@ export default function LiveTV() {
 
   const handlePlay = async (item) => {
     // Check if channel's category is restricted
-    const catId = item.category_id || item.categoryId;
-    const cat = categories?.find(c => String(c.id) === String(catId));
+    const cat = categories?.find(c => String(c.id) === String(item.group));
     if (cat && parental?.isRestricted(cat.name)) {
       const allowed = await parental.requirePin();
       if (!allowed) return;

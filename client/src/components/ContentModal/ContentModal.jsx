@@ -3,10 +3,11 @@ import styles from './ContentModal.module.css';
 
 export default function ContentModal({ item, onClose, onPlay, children }) {
   useEffect(() => {
+    if (!item) return;
     const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [onClose]);
+  }, [onClose, item]);
 
   if (!item) return null;
 

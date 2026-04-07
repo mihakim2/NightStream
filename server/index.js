@@ -35,6 +35,12 @@ app.use('/api/epg', epgRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/favorites', favoritesRoutes);
 
+// Global error handler — catches unhandled errors in async route handlers
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err.message);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
 app.listen(PORT, () => {
-  console.log(`XtreamPlayer server running on http://localhost:${PORT}`);
+  console.log(`NightStream server running on http://localhost:${PORT}`);
 });

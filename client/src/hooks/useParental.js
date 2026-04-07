@@ -36,12 +36,17 @@ export function useParental() {
   }, [settings.parentalPin, isUnlocked]);
 
   const verifyPin = useCallback(async (pin) => {
-    const res = await fetch('/api/settings/verify-pin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pin }),
-    });
-    const data = await res.json();
+    let data;
+    try {
+      const res = await fetch('/api/settings/verify-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin }),
+      });
+      data = await res.json();
+    } catch {
+      return false;
+    }
     if (data.ok) {
       setIsUnlocked(true);
       setShowPinModal(false);

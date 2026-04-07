@@ -1,5 +1,10 @@
 node_modules/
-client/node_modules/
 dist/
-data/*.json
+data/
 .DS_Store
+.env
+.env.*
+*.log
+.vscode/
+.idea/
+Thumbs.db

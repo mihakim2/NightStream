@@ -87,14 +87,14 @@ export default function App() {
               )
             } />
           </Routes>
+          <Player />
+          {parental.showPinModal && (
+            <PinModal
+              onVerify={parental.verifyPin}
+              onDismiss={parental.dismissPin}
+            />
+          )}
         </BrowserRouter>
-        <Player />
-        {parental.showPinModal && (
-          <PinModal
-            onVerify={parental.verifyPin}
-            onDismiss={parental.dismissPin}
-          />
-        )}
       </ParentalContext.Provider>
     </PlayerContext.Provider>
   );

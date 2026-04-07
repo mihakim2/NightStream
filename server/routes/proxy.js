@@ -41,7 +41,8 @@ router.get('/stream', async (req, res) => {
   if (!url) return res.status(400).json({ error: 'url parameter required' });
 
   try {
-    const targetUrl = decodeURIComponent(url);
+    // Express already decodes query params, so use url directly
+    const targetUrl = url;
 
     // Forward Range header from browser for seeking support
     const upstreamHeaders = {};
